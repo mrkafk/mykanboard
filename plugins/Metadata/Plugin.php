@@ -16,7 +16,7 @@ class Plugin extends Base {
         $this->template->hook->attach('template:board:task:icons', 'metadata:task/footer_icon');
 
         //@PLUG_MMM
-        $this->template->hook->attach('template:task:details:top', 'metadata:task/details',  array('variable' => 'foobar',));
+        $this->template->hook->attach('template:task:details:bottom', 'metadata:task/details',  array('variable' => 'foobar',));
 
         //User
         $this->template->hook->attach('template:user:sidebar:information', 'metadata:user/sidebar');

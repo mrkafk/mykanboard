@@ -30,9 +30,5 @@ if (empty($metadata)): ?>
     </tr>
     <?php endforeach ?>
     </table>
-<?php endif ?>
-
-<?php if ($add_form): ?>
-<p>@PLUG_MD_AKRQA</p>
-<?= $this->render('metadata:task/form', array('task' => $task, 'project' => $project, 'form_headline' => t('Add Metadata'), 'values' => array())) ?>
+<?= $this->render('metadata:task/form', array('task' => $task, 'project' => $project, 'form_headline' => t('Add Custom Field'), 'values' => array())) ?>
 <?php endif ?>

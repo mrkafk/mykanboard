@@ -1,7 +1,14 @@
 <section id="task-summary">
     <h2><?= $this->text->e($task['title']) ?></h2>
 
-    <h3><? print_r($task);?></h3>
+    <h4>All fields of $task:</h4>
+
+    <?php      foreach($task as $key => $value): ?>
+        <?= $key ?> =>        <?= $value ?>  | 
+    <?php endforeach ?>
+
+
+    <!--<? print_r($task);?></h4>-->
     <br>
     <h3>  @FORK_DKLWME Here: <? print_r($task['git_commit']) ?> </h3> // @FORK_DKLWME
 
