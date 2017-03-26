@@ -30,5 +30,7 @@ if (empty($metadata)): ?>
     </tr>
     <?php endforeach ?>
     </table>
+
+@PLUG_ADDCSTFLD
 <?= $this->render('metadata:task/form', array('task' => $task, 'project' => $project, 'form_headline' => t('Add Custom Field'), 'values' => array())) ?>
 <?php endif ?>
