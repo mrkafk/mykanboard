@@ -24,7 +24,33 @@ class Plugin extends Base {
 
         // Add link to new plugin settings
         //$this->template->hook->attach('template:config:sidebar', 'Metadata:config/sidebar');
+
+        $this->logger->info('START434');
+
+        $this->eventManager->register('model:task:creation:after', 'After task has been created');
+
+        //@PLUG_MD_EVENTS
+        $this->hook->on('model:task:creation:prepare', array($this, 'beforeSave'));
+
+        $this->hook->on('model:task:creation:after', array($this, 'afterSave'));
+
+
     }
+
+    public function beforeSave(array &$values)
+    {
+        $values = $this->dateParser->convert($values, array('due_date'));
+            $this->logger->info('TASK_BEFORESAVE999');
+            $this->logger->info($values);
+
+    }
+
+    public function afterSave(array &$values)
+    {
+            $this->logger->info('TASK_CREATE_AFTER888');
+            $this->logger->info($values);
+    }
+
 
     public function onStartup()
     {
