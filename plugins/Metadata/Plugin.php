@@ -48,6 +48,8 @@ class Plugin extends Base {
     {
             $this->logger->info('TASK_CREATE_AFTER888');
             $this->logger->info('VALUES: '.$values['task_id']);
+            $this->logger->info('VALUES2: '.json_encode($values));
+            // $this->logger->info('VALUES2: '.implode(" ", $values));
     }
 
 
