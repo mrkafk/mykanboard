@@ -49,12 +49,10 @@ class TaskCreationModel extends Base
 
         // Patch to allow hooks to plug after creation of task @MK
         $tid = (int) $task_id;
-
         $values['task_id'] = $tid;
-
         $this->hook->reference('model:task:creation:after', $values);
 
-        return (int) $task_id;
+        return (int) $tid;
     }
 
     /**

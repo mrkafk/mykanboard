@@ -30,7 +30,7 @@ class Plugin extends Base {
         $this->eventManager->register('model:task:creation:after', 'After task has been created');
 
         //@PLUG_MD_EVENTS
-        $this->hook->on('model:task:creation:prepare', array($this, 'beforeSave'));
+        // $this->hook->on('model:task:creation:prepare', array($this, 'beforeSave'));
 
         $this->hook->on('model:task:creation:after', array($this, 'afterSave'));
 
@@ -39,7 +39,6 @@ class Plugin extends Base {
 
     public function beforeSave(array &$values)
     {
-        $values = $this->dateParser->convert($values, array('due_date'));
             $this->logger->info('TASK_BEFORESAVE999');
             $this->logger->info($values);
 
@@ -48,7 +47,7 @@ class Plugin extends Base {
     public function afterSave(array &$values)
     {
             $this->logger->info('TASK_CREATE_AFTER888');
-            $this->logger->info($values);
+            $this->logger->info('VALUES: '.$values['task_id']);
     }
 
 
