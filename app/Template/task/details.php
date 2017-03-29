@@ -1,16 +1,17 @@
 <section id="task-summary">
     <h2><?= $this->text->e($task['title']) ?></h2>
 
-    <h4>All fields of $task:</h4>
+<!--@FORK-->
+    <!--<h4>All fields of $task:</h4>
 
     <?php      foreach($task as $key => $value): ?>
         <?= $key ?> =>        <?= $value ?>  | 
-    <?php endforeach ?>
+    <?php endforeach ?>-->
 
 
     <!--<? print_r($task);?></h4>-->
     <br>
-    <h3>  @FORK_DKLWME Here: <? print_r($task['git_commit']) ?> </h3> // @FORK_DKLWME
+    <!--<h3>  @FORK_DKLWME Here: <? print_r($task['git_commit']) ?> </h3> // @FORK_DKLWME-->
 
     <?= $this->hook->render('template:task:details:top', array('task' => $task)) ?>
 

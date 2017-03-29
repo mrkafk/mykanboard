@@ -32,21 +32,22 @@ class Plugin extends Base {
         //@PLUG_MD_EVENTS
         // $this->hook->on('model:task:creation:prepare', array($this, 'beforeSave'));
 
-        $this->hook->on('model:task:creation:after', array($this, 'afterSave'));
+        $this->hook->on('model:task:creation:after', array($this, 'checkTaskDefaultCustomFields'));
+        $this->hook->on('model:task:modification:after_update', array($this, 'checkTaskDefaultCustomFields'));
 
 
     }
 
-    public function beforeSave(array &$values)
+    public function checkTaskDefaultCustomFields(array &$values)
     {
-            $this->logger->info('TASK_BEFORESAVE999');
-            $this->logger->info($values);
-
-    }
-
-    public function afterSave(array &$values)
-    {
-            $this->logger->info('TASK_AFTER_SAVE, VALUES: '.json_encode($values));
+            $task_id = $values['task_id'];
+            if($task_id) {
+                $this->logger->info('TASK_CREATE '.json_encode($values));
+            }
+            else {
+                $this->logger->info('TASK_UPDATE '.json_encode($values));
+                $task_id = $values['updated_task_id'];
+            }
             $project_id = $values['project_id'];
             $project_metadata = $this->projectMetadataModel->getAll($project_id);
             $this->logger->info('projectMetadataModel: '.json_encode($project_metadata));
@@ -55,9 +56,7 @@ class Plugin extends Base {
             // $categories_list = $this->categoryModel->getList($project_id);
             // $this->logger->info('category_id: '.$category_id);
             // $this->logger->info('category_name: '.$category_name);
-            $task_id = $values['task_id'];
             $this->addTaskDefaultCustomFields($task_id, $category_name, $project_metadata);
-
     }
 
     public function addTaskDefaultCustomFields($task_id, $category_name, $project_metadata )

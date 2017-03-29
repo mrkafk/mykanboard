@@ -23,6 +23,8 @@ class TaskModificationModel extends Base
     public function update(array $values, $fire_events = true)
     {
         $task = $this->taskFinderModel->getById($values['id']);
+        // PATCH MK
+        $task_id = $values['id'];
 
         $this->updateTags($values, $task);
         $this->prepare($values);
@@ -31,6 +33,10 @@ class TaskModificationModel extends Base
         if ($fire_events && $result) {
             $this->fireEvents($task, $values);
         }
+
+        // @PATCH MK allow reading task id for plugin
+        $values['updated_task_id'] = $task_id;
+        $this->hook->reference('model:task:modification:after_update', $values);
 
         return $result;
     }
@@ -100,6 +106,8 @@ class TaskModificationModel extends Base
     {
         $values = $this->dateParser->convert($values, array('date_due'));
         $values = $this->dateParser->convert($values, array('date_started'), true);
+
+
 
         $this->helper->model->removeFields($values, array('id'));
         $this->helper->model->resetFields($values, array('date_due', 'date_started', 'score', 'category_id', 'time_estimated', 'time_spent'));
