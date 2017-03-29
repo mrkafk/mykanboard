@@ -46,33 +46,35 @@ class Plugin extends Base {
 
     public function afterSave(array &$values)
     {
-            $this->logger->info('TASK_CREATE_AFTER888');
-            $this->logger->info('VALUES: '.$values['task_id']);
-            $this->logger->info('VALUES2: '.json_encode($values));
+            $this->logger->info('TASK_AFTER_SAVE, VALUES: '.json_encode($values));
             $project_id = $values['project_id'];
             $project_metadata = $this->projectMetadataModel->getAll($project_id);
             $this->logger->info('projectMetadataModel: '.json_encode($project_metadata));
             $category_id = $values['category_id'];
             $category_name = $this->categoryModel->getNameById($category_id);
-            $categories_list = $this->categoryModel->getList($project_id);
-            $this->logger->info('category_id: '.$category_id);
-            $this->logger->info('category_name: '.$category_name);
+            // $categories_list = $this->categoryModel->getList($project_id);
+            // $this->logger->info('category_id: '.$category_id);
+            // $this->logger->info('category_name: '.$category_name);
             $task_id = $values['task_id'];
+            $this->addTaskDefaultCustomFields($task_id, $category_name, $project_metadata);
+
+    }
+
+    public function addTaskDefaultCustomFields($task_id, $category_name, $project_metadata )
+    {
             foreach($project_metadata as $k => $v) {
-                $this->logger->info('p_m: k '.$k.' v '.$v);
+                // $this->logger->info('p_m: k '.$k.' v '.$v);
                 $cat_name_len = strlen($category_name);
                 if(strncasecmp($k, $category_name, $cat_name_len) === 0) {
                     $custom_field_name = substr($k, $cat_name_len+1, strlen($k));
-                    $this->logger->info('BINGO: category_name '.$category_name.' k '.$k.' v '.$v.' custom_field_name '.$custom_field_name);
+                    // $this->logger->info('BINGO: category_name '.$category_name.' k '.$k.' v '.$v.' custom_field_name '.$custom_field_name);
                     if(!$this->taskMetadataModel->exists($task_id, $custom_field_name)) {
                         $this->logger->info('FIELD NOT FOUND: custom_field_name '.$custom_field_name);
                         $this->taskMetadataModel->save($task_id, [$custom_field_name => $v]);
                     }
                 }
             }
-
     }
-
 
     public function onStartup()
     {

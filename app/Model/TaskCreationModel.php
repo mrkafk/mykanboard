@@ -51,7 +51,7 @@ class TaskCreationModel extends Base
         $values['task_id'] = (int) $task_id;
         $this->hook->reference('model:task:creation:after', $values);
 
-        return (int) $tid;
+        return (int) $task_id;
     }
 
     /**
