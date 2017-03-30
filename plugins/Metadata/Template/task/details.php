@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h2><?= t('Custom Fields') ?></h2>
+    <h2><?= t('Category and Custom Fields') ?></h2>
 </div>
 
 
@@ -67,6 +67,6 @@ if (empty($metadata)): ?>
 <!--@PLUGIN_CUSTOM_FIELDS-->
 <?= $this->render('metadata:task/form', array('task' => $task, 'project' => $project, 'form_headline' => t('Add Custom Field'), 'values' => array())) ?>
 
-<?= $this->url->icon('life-ring', t('Documentation on Custom Fields'), 'MetadataDocumentationController', 'show', array('plugin' => 'metadata', 'file' => 'custom-fields')) ?>
+<?= $this->url->icon('life-ring', t('Documentation on Category and Custom Fields'), 'MetadataDocumentationController', 'show', array('plugin' => 'metadata', 'file' => 'custom-fields')) ?>
 
 <?php endif ?>
