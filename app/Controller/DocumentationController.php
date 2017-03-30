@@ -35,11 +35,11 @@ class DocumentationController extends BaseController
     /**
      * Prepare Markdown file
      *
-     * @access private
+     * @access protected
      * @param  string $filename
      * @return array
      */
-    private function render($filename)
+    protected function render($filename)
     {
         $data = file_get_contents($filename);
         $content = preg_replace_callback('/\((.*.markdown)\)/', array($this, 'replaceMarkdownUrl'), $data);
@@ -80,11 +80,11 @@ class DocumentationController extends BaseController
     /**
      * Get Markdown file according to the current language
      *
-     * @access private
+     * @access protected
      * @param  string $page
      * @return string
      */
-    private function getPageFilename($page)
+    protected function getPageFilename($page)
     {
         return $this->getFileLocation($page . '.markdown') ?:
             implode(DIRECTORY_SEPARATOR, array(ROOT_DIR, 'doc', 'en_US', 'index.markdown'));
@@ -93,11 +93,11 @@ class DocumentationController extends BaseController
     /**
      * Get base URL for Markdown links
      *
-     * @access private
+     * @access protected
      * @param  string $filename
      * @return string
      */
-    private function getFileBaseUrl($filename)
+    protected function getFileBaseUrl($filename)
     {
         $language = $this->languageModel->getCurrentLanguage();
         $path = $this->getFileLocation($filename);
@@ -114,11 +114,11 @@ class DocumentationController extends BaseController
     /**
      * Get file location according to the current language
      *
-     * @access private
+     * @access protected
      * @param  string $filename
      * @return string
      */
-    private function getFileLocation($filename)
+    protected function getFileLocation($filename)
     {
         $files = array(
             implode(DIRECTORY_SEPARATOR, array(ROOT_DIR, 'doc', $this->languageModel->getCurrentLanguage(), $filename)),

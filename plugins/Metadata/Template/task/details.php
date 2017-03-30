@@ -64,6 +64,9 @@ if (empty($metadata)): ?>
     <?php endforeach ?>
     </table>
 
-@PLUG_ADDCSTFLD
+<!--@PLUGIN_CUSTOM_FIELDS-->
 <?= $this->render('metadata:task/form', array('task' => $task, 'project' => $project, 'form_headline' => t('Add Custom Field'), 'values' => array())) ?>
+
+<?= $this->url->icon('life-ring', t('Documentation on Custom Fields'), 'MetadataDocumentationController', 'show', array('plugin' => 'metadata', 'file' => 'custom-fields')) ?>
+
 <?php endif ?>
