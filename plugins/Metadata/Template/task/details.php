@@ -4,6 +4,22 @@
 
 
 <?php  $metadata = $this->task->taskMetadataModel->getAll($task['id']);
+
+$project_id = $task['project_id'];
+$category_id = $task['category_id'];
+$category_name = $this->task->categoryModel->getNameById($category_id);
+$all_project_categories = $this->task->categoryModel->getAll($project_id);
+$inapplicable_categories = array();
+foreach($all_project_categories as $cat) {
+    $cat_name = $cat['name'];
+    if(strcmp($cat_name, $category_name) != 0)
+        array_push($inapplicable_categories, $cat_name);
+}
+
+// $this->task->logger->info('TASK_CUSTOM_FIELDS all_project_categories '.json_encode($all_project_categories).' category_name '.json_encode($category_name)
+// .' inapplicable_categories '.json_encode($inapplicable_categories));
+
+
 if (empty($metadata)): ?>
     <p class="alert"><?= t('No metadata') ?></p>
 <?php else: ?>
@@ -13,7 +29,14 @@ if (empty($metadata)): ?>
         <th class="column-40"><?= t('Value') ?></th>
         <th class="column-20"><?= t('Action') ?></th>
     </tr>
-    <?php foreach ($metadata as $key => $value): ?>
+    <?php
+    foreach ($metadata as $key => $value):
+        $cf_cat = explode('_', $key)[0];
+        if(in_array($cf_cat, $inapplicable_categories)) {
+            $this->task->logger->info('TASK_CUSTOM_FIELDS skip displaying task metadata for this category '.json_encode($category_name).' key '.json_encode($key));
+            continue;
+        }
+    ?>
     <tr>
         <td><?= $key ?></td>
         <td><?= $value ?></td>

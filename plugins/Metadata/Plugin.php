@@ -15,7 +15,7 @@ class Plugin extends Base {
         $this->template->hook->attach('template:task:sidebar:information', 'metadata:task/sidebar');
         $this->template->hook->attach('template:board:task:icons', 'metadata:task/footer_icon');
 
-        //@PLUG_MMM
+        //@PLUG_CF
         $this->template->hook->attach('template:task:details:bottom', 'metadata:task/details',  array('variable' => 'foobar',));
 
         //User
@@ -25,12 +25,9 @@ class Plugin extends Base {
         // Add link to new plugin settings
         //$this->template->hook->attach('template:config:sidebar', 'Metadata:config/sidebar');
 
-        $this->logger->info('START434');
-
         $this->eventManager->register('model:task:creation:after', 'After task has been created');
 
-        //@PLUG_MD_EVENTS
-        // $this->hook->on('model:task:creation:prepare', array($this, 'beforeSave'));
+        //@PLUG_CF_MD_EVENTS
 
         $this->hook->on('model:task:creation:after', array($this, 'checkTaskDefaultCustomFields'));
         $this->hook->on('model:task:modification:after_update', array($this, 'checkTaskDefaultCustomFields'));
@@ -65,11 +62,11 @@ class Plugin extends Base {
                 // $this->logger->info('p_m: k '.$k.' v '.$v);
                 $cat_name_len = strlen($category_name);
                 if(strncasecmp($k, $category_name, $cat_name_len) === 0) {
-                    $custom_field_name = substr($k, $cat_name_len+1, strlen($k));
+                    // $custom_field_name = substr($k, $cat_name_len+1, strlen($k));
                     // $this->logger->info('BINGO: category_name '.$category_name.' k '.$k.' v '.$v.' custom_field_name '.$custom_field_name);
-                    if(!$this->taskMetadataModel->exists($task_id, $custom_field_name)) {
-                        $this->logger->info('FIELD NOT FOUND: custom_field_name '.$custom_field_name);
-                        $this->taskMetadataModel->save($task_id, [$custom_field_name => $v]);
+                    if(!$this->taskMetadataModel->exists($task_id, $k)) {
+                        $this->logger->info('FIELD NOT FOUND: k '.$k);
+                        $this->taskMetadataModel->save($task_id, [$k => $v]);
                     }
                 }
             }
