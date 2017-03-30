@@ -38,7 +38,17 @@ if (empty($metadata)): ?>
         }
     ?>
     <tr>
-        <td><?= $key ?></td>
+        <td>
+        <?php
+        $prefix = substr($key, 0, strlen($category_name));
+        if($prefix === $category_name): ?>
+            <span style="color:grey"><?=$prefix?>_</span><?= substr($key, strlen($cf_cat) + 1) ?>
+        <?php else: ?>
+            <?= $key ?>
+        <?php endif ?>
+
+        </td>
+
         <td><?= $value ?></td>
         <td>
             <ul>
